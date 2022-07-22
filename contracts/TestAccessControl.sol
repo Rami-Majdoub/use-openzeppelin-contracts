@@ -11,7 +11,12 @@ contract TestAccessControl is AccessControl {
 	
 	constructor() {
 		// give the role to deployer
+		// so that he can change the value of val
 		_grantRole(ROLE_CHANGE_VAL, _msgSender());
+
+		// give the "admin role" of the role to the deployer
+		// so that the deployer can give the role to other address
+		_grantRole(getRoleAdmin(ROLE_CHANGE_VAL), _msgSender());
 	}
 	
 	// only signers with ROLE_CHANGE_VAL can change the value of val

@@ -44,10 +44,24 @@ describe("TestAccessControl", () => {
     await contract.setVal(2)
     expect(await contract.getVal()).equal(2)
   })
+
   it("should not allow signer without the role to change value",async () => {
     const { contract, singner1: s1 } = await loadFixture(deployContractFixture)
 
     expect(contract.connect(s1).setVal(3)).reverted
   })
   
+  it("deployer can give the role", async () => {
+    const { contract, ROLE, singner1: s1 } = await loadFixture(deployContractFixture)
+
+    expect(await contract.grantRole(ROLE, s1.address))
+      .emit(contract, "RoleGranted") // method 1: event is emitted when role granted
+    
+    // method 2: signer has role
+    // expect(await contract.hasRole(ROLE, s1.address)).equal(true)
+
+    // method 3: can change value
+    // await contract.connect(s1).setVal(6)
+    // expect(await contract.getVal()).equal(6)
+  })
 })
