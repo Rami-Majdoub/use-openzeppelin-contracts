@@ -1,12 +1,12 @@
 import { ethers } from "hardhat";
 
-async function main() {
+async function main() {  
   const contractName = "TestAccessControl";
 
   const contractFactory = await ethers.getContractFactory(contractName);
-  const contract = await contractFactory.deploy();
+  const abi = contractFactory.interface.format(ethers.utils.FormatTypes.full) // full minimal json
   
-  console.log(`Contract ${contractName} deployed at address: `, contract.address);
+  console.log(abi);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
