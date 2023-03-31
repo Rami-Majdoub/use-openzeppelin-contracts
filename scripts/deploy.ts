@@ -1,10 +1,10 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const contractName = "TestAccessControl";
+  const contractName = "ERC20FixedPrice";
 
   const contractFactory = await ethers.getContractFactory(contractName);
-  const contract = await contractFactory.deploy();
+  const contract = await contractFactory.deploy("Coin", "COIN");
   
   console.log(`Contract ${contractName} deployed at address: `, contract.address);
 }

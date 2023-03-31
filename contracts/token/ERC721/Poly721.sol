@@ -13,14 +13,17 @@ contract Poly721 is ERC721, ERC721Burnable, Ownable {
 
     constructor() ERC721("Poly721", "POLY") {}
     
-    string public _uri = "";
+    string public _URI = "";
     
+    event BaseURIChanged(string oldURI, string newURI);
+
     function _baseURI() internal view virtual override returns (string memory) {
-        return _uri;
+        return _URI;
     }
     
-    function setBaseUri(string memory uri) public {
-    	_uri = uri;
+    function setBaseUri(string memory newURI) public {
+    	emit BaseURIChanged(_URI, newURI);
+    	_URI = newURI;
     }
 
     function safeMint(address to) public onlyOwner {
